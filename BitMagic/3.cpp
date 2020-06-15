@@ -1,3 +1,4 @@
+// https://practice.geeksforgeeks.org/problems/power-of-2/0
 #include<bits/stdc++.h>
 using namespace std;
 #define endl "\n"
