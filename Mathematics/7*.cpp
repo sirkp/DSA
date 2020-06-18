@@ -27,6 +27,8 @@ int main() {
 	while(t--){
 	    int a,M;
 	    cin>>a>>M;
+		if (M==1)
+    	cout<<-1<<endl;
 		int x, y;
 	    int gcd = gcdExtended(a, M, &x, &y);
 		if(gcd!=1)
