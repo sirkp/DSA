@@ -1,44 +1,64 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void swap(vector<long long>& v, int i, int j){
-    int temp = v[i];
-    v[i] = v[j];
-    v[j] = temp;
-}
-
-void reverse(vector<long long>& arr, int start, int end){// [start, end]
-    while(start<end){
-        swap(arr, start, end);
-        start++;
-        end--;
-    }
-}
-
-int getEnd(int i, int k, int n){
-    if((i+k)<n)
-        return (i+k-1);
-    else
-        return (n-1);    
-}
-
-vector<long long> reverseInGroups(vector<long long> arr, int n, int k){
-    int i=0;
-    int end;
-    while(i<n){
-        end = getEnd(i, k, n);
-        reverse(arr, i, end);
-        i = end+1;
-    }
-    return arr;
-}
-
-void print(vector<long long> v){
-    int n = v.size();
+void printArray(int arr[], int n, string s=""){
+    if(s!="")
+        cout<<s<<": ";
     for(int i=0;i<n;i++){
-        cout<<v[i]<<" ";
+        cout<<arr[i]<<" ";
+    }    
+    cout<<endl;    
+}
+
+void cinArray(int arr[], int n){
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }    
+}
+
+int maxIndexDiff(int arr[], int n) 
+{ 
+    int rightMax[n];
+    rightMax[(n-1)] = arr[(n-1)];
+    
+    int maxx = arr[(n-1)];
+    for(int i=(n-2);i>=0;i--){
+        maxx = max(arr[i], maxx);
+        rightMax[i] = maxx;    
     }
-    cout<<endl;
+    
+    int leftMax[n];
+    leftMax[0] = arr[0];
+    
+    int minn = arr[0];
+    for(int i=1;i<n;i++){
+        minn = min(minn, arr[i]);
+        leftMax[i] = minn;
+    }
+    
+    int i=0;
+    int j=0;
+    maxx = -1;
+    while(i<n&&j<n){
+        if(rightMax[j]>=leftMax[i]){
+            maxx = max(maxx, (j-i));
+            j++;
+        }
+        else
+            i++;
+    }
+    return maxx;
+}
+
+void solve(){
+    int n;
+    cin>>n;
+
+    int arr[n];
+    cinArray(arr, n);
+    
+    cout<<maxIndexDiff(arr, n)<<endl;    
+    // printArray(arr, n);
 }
 
 int main() {
@@ -46,23 +66,9 @@ int main() {
         freopen("input.txt","r",stdin);
         freopen("output.txt","w",stdout);
     #endif
-    
-    int t;
-    cin>>t;
-    while(t--){
-        int n, k;
-        cin>>n>>k;
-
-        vector<long long> arr;
-        int temp;
-        for(int i=0;i<n;i++){
-            cin>>temp;
-            arr.push_back(temp);
+        int t = 1;
+        cin>>t;
+        while(t--){
+            solve();
         }
-        // print(arr);
-        arr = reverseInGroups(arr, n, k);
-        print(arr);
-    }
-    
-
 }

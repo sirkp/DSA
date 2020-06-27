@@ -1,5 +1,5 @@
 // https://practice.geeksforgeeks.org/problems/majority-element/0
-
+// mooreVotingAlgo
 
 int mooreVotingAlgo(int arr[], int n){
     int count = 1;
