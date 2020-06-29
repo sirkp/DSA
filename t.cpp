@@ -16,49 +16,47 @@ void cinArray(int arr[], int n){
     }    
 }
 
-int maxIndexDiff(int arr[], int n) 
-{ 
-    int rightMax[n];
-    rightMax[(n-1)] = arr[(n-1)];
-    
-    int maxx = arr[(n-1)];
-    for(int i=(n-2);i>=0;i--){
-        maxx = max(arr[i], maxx);
-        rightMax[i] = maxx;    
-    }
-    
-    int leftMax[n];
-    leftMax[0] = arr[0];
-    
-    int minn = arr[0];
-    for(int i=1;i<n;i++){
-        minn = min(minn, arr[i]);
-        leftMax[i] = minn;
-    }
-    
-    int i=0;
-    int j=0;
-    maxx = -1;
-    while(i<n&&j<n){
-        if(rightMax[j]>=leftMax[i]){
-            maxx = max(maxx, (j-i));
-            j++;
-        }
-        else
-            i++;
-    }
-    return maxx;
+int getMaxDigit(int arr[], int n){
+    int maxx = -1;
+    for(int i=0;i<n;i++)
+        if(arr[i]>maxx)
+            maxx = arr[i];
+    return ((int)log2(maxx));        
 }
 
+int makeZero(int arr[], int n, int div){
+    int c = 0;
+    int temp;
+    for(int i=0;i<n;i++){
+        if(arr[i]>=div)
+            c++;
+    }
+    if(c<=1){
+        for(int i=0;i<n;i++){
+            if(arr[i]>=div)
+                arr[i] -= div;
+        }
+        temp = 0;    
+    }
+    else{
+        for(int i=0;i<n;i++){
+            arr[i] -= div;
+            if(arr[i]<0)
+                arr[i] = 0;
+        } 
+        temp = div;  
+    }
+}
+
+
 void solve(){
+
     int n;
     cin>>n;
-
+    
     int arr[n];
     cinArray(arr, n);
-    
-    cout<<maxIndexDiff(arr, n)<<endl;    
-    // printArray(arr, n);
+    cout<<maxAND(arr, n)<<endl;
 }
 
 int main() {

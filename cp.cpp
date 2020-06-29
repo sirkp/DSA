@@ -1,7 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define endl "\n"
+#define loop(n) for(int i=0;i<n;i++)
+#define debug(x) cerr<< #x <<": "<<x<<endl;
 
-void printArray(long long arr[], int n, string s=""){
+void printArray(int arr[], int n, string s=""){
     if(s!="")
         cout<<s<<": ";
     for(int i=0;i<n;i++){
@@ -10,66 +13,69 @@ void printArray(long long arr[], int n, string s=""){
     cout<<endl;    
 }
 
-void cinArray(long long arr[], int n){
+void cinArray(int arr[], int n){
     for(int i=0;i<n;i++){
         cin>>arr[i];
     }    
 }
 
-int brut(string s){
-    int res = 0;
-
-    int init = 0;
-    while(1){
-        int cur = init;
-        bool ok = true;
-        for(int i=0;i<(int)s.size();i++){
-            res = res + 1;
-            if (s[i] == '+')
-                cur = cur + 1;
-            else
-                cur = cur - 1;
-            if (cur < 0){
-                ok = false;
-                break;  
-            }
-        }
-        init++;
-        if(ok)
-            break;
-    }  
-
-    return res;
+bool isPerf(int n){
+    if((n&(n-1))==0)
+        return true;
+    else
+        return false;    
 }
 
-long long int optmised(string s){
+void print(bool ashish){// ashish = true
+    if(ashish)
+        cout<<"Ashishgup\n";
+    else
+        cout<<"FastestFinger\n";    
+}
 
-    long long int res = 0;
-    long long int min = 0;
-    long long int c = 0;
-    for(long long int i=0;i<(long long int)s.size();i++){
-        if(s[i]=='-')
-            c--;
-        else
-            c++;
-        // cout<<c<<" ";
-        if(c<min){
-            min = c;
-            res += (i+1);
-        }        
+int getSmallest(int n){
+    for(int i=3;i<=(n/2);i+=2){
+        if(n%i==0)
+            return (n/i);
     }
+    return 0;
+}
 
-    // cout<<endl;
-    res = (res+(long long int)s.size());
-    return res;
+
+bool isPrime(int n){
+    for(int i=2;i<=((int)sqrt(n));i++){
+        if(n%i==0)
+            return false;
+    }
+    return true;
+}
+
+void test(){
+    loop(30){
+        if(i>=2)
+        cout<<i<<" -> "<<isPrime(i)<<endl;
+    }
 }
 
 void solve(){
-    string s;
-    cin>>s;
-    // cout<<"brut: "<<brut(s)<<"  ";
-    // cout<<"opt: "<<optmised(s)<<endl;
-    cout<<optmised(s)<<endl;
+    int n;
+    cin>>n;
+
+    if(n==1)
+        print(false);
+    else if((n==2) || ((n%2)==1)){
+        print(true);
+    }
+    else if(isPerf(n)){
+        print(false);
+    }
+    else{
+        if(isPrime(n/2))
+            print(false);
+        else
+            print(true);    
+                
+    }    
     
 }
 
@@ -78,8 +84,10 @@ int main() {
         freopen("input.txt","r",stdin);
         freopen("output.txt","w",stdout);
     #endif
+        ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); 
         int t = 1;
         cin>>t;
+        // test();
         while(t--){
             solve();
         }
