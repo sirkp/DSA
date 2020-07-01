@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define SIZE 1000
 
 void printArray(int arr[], int n, string s=""){
     if(s!="")
@@ -16,36 +17,69 @@ void cinArray(int arr[], int n){
     }    
 }
 
-int getMaxDigit(int arr[], int n){
-    int maxx = -1;
-    for(int i=0;i<n;i++)
-        if(arr[i]>maxx)
-            maxx = arr[i];
-    return ((int)log2(maxx));        
+void cinMatrix(int arr[][100], int n){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>arr[i][j];
+        }
+    }
 }
 
-int makeZero(int arr[], int n, int div){
-    int c = 0;
-    int temp;
-    for(int i=0;i<n;i++){
-        if(arr[i]>=div)
-            c++;
-    }
-    if(c<=1){
-        for(int i=0;i<n;i++){
-            if(arr[i]>=div)
-                arr[i] -= div;
+void printMatrix(int arr[SIZE][SIZE], int m, int n){
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            cout<<arr[i][j]<<" ";
         }
-        temp = 0;    
+        cout<<endl;
     }
-    else{
+}
+
+int findMinOpeartion(int arr[][100], int n){
+    int row = 0;
+    for(int i=0;i<n;i++){
+        int r = 0;
+        for(int j=0;j<n;j++){
+            r += arr[i][j];
+        }
+        row = max(row, r);
+    }
+    
+    int col = 0;
+    for(int j=0;j<n;j++){
+        int c = 0;
         for(int i=0;i<n;i++){
-            arr[i] -= div;
-            if(arr[i]<0)
-                arr[i] = 0;
-        } 
-        temp = div;  
+            c += arr[i][j];
+        }
+        col = max(col, c);
     }
+    // cout<<"row:"<<row<<" col:"<<col<<endl;
+    int step = 0;
+    if(row>col){
+        for(int i=0;i<n;i++){
+            int r = 0;
+            for(int j=0;j<n;j++){
+                r += arr[i][j];
+            }
+            // cout<<"row: "<<i<<" ->"<<(row-r)<<endl;
+            step += (row-r);
+        }
+    }else{
+        for(int j=0;j<n;j++){
+            int c = 0;
+            for(int i=0;i<n;i++){
+                c += arr[i][j];
+            }
+            // cout<<"col: "<<j<<" ->"<<(col-c)<<endl;
+            step += (col-c);
+        }   
+    }   
+    return step;
+    
+}
+
+
+
+void test(){
 }
 
 
@@ -54,9 +88,9 @@ void solve(){
     int n;
     cin>>n;
     
-    int arr[n];
-    cinArray(arr, n);
-    cout<<maxAND(arr, n)<<endl;
+    int arr[n][100];
+    cinMatrix(arr, n);
+    cout<<findMinOpeartion(arr, n)<<endl;
 }
 
 int main() {
@@ -64,6 +98,7 @@ int main() {
         freopen("input.txt","r",stdin);
         freopen("output.txt","w",stdout);
     #endif
+        // test();
         int t = 1;
         cin>>t;
         while(t--){
