@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define SIZE 1000
 
 void printArray(int arr[], int n, string s=""){
     if(s!="")
@@ -17,81 +16,48 @@ void cinArray(int arr[], int n){
     }    
 }
 
-void cinMatrix(int arr[][100], int n){
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            cin>>arr[i][j];
-        }
+int medianTwoSortedArray(int arr1[], int arr2[], int m, int n){//hamesa arr1 chota hoga
+    int low = 0, high = m;//high is not (m-1) bcoz hame pure small array ka sum chahiye us case mai jab pura array1 hoga left partition mai
+    while(low<=high){
+        int posX = (low+high)/2;
+        int posY = ((m+n+1)/2)-posX;
+        // cout<<"low:"<<low<<" high:"<<high<<" posX:"<<posX<<" posY:"<<posY<<endl;
+        int maxLeftX = (posX!=0)?arr1[(posX-1)]:INT_MIN;
+        int minRightX = (posX!=m)?arr1[posX]:INT_MAX;
+        
+        int maxLeftY = (posY!=0)?arr2[(posY-1)]:INT_MIN;
+        int minRightY = (posY!=n)?arr2[posY]:INT_MAX;
+
+        if(maxLeftX<=minRightY && maxLeftY<=minRightX){
+            // cout<<"maxLeftX:"<<maxLeftX<<" maxLeftY:"<<maxLeftY<<"\nminRightX:"<<minRightX<<" minRightY:"<<minRightY<<endl;
+            if(((m+n)%2)==0)
+                return ((max(maxLeftY, maxLeftX)+min(minRightX, minRightY))/2);
+            else
+                return max(maxLeftY, maxLeftX);    
+        } 
+        else if(maxLeftY>minRightX)
+            low = posX+1;
+        else
+            high = posX-1;    
     }
+    return -1;// to avoid warning
 }
-
-void printMatrix(int arr[SIZE][SIZE], int m, int n){
-    for(int i=0;i<m;i++){
-        for(int j=0;j<n;j++){
-            cout<<arr[i][j]<<" ";
-        }
-        cout<<endl;
-    }
-}
-
-int findMinOpeartion(int arr[][100], int n){
-    int row = 0;
-    for(int i=0;i<n;i++){
-        int r = 0;
-        for(int j=0;j<n;j++){
-            r += arr[i][j];
-        }
-        row = max(row, r);
-    }
-    
-    int col = 0;
-    for(int j=0;j<n;j++){
-        int c = 0;
-        for(int i=0;i<n;i++){
-            c += arr[i][j];
-        }
-        col = max(col, c);
-    }
-    // cout<<"row:"<<row<<" col:"<<col<<endl;
-    int step = 0;
-    if(row>col){
-        for(int i=0;i<n;i++){
-            int r = 0;
-            for(int j=0;j<n;j++){
-                r += arr[i][j];
-            }
-            // cout<<"row: "<<i<<" ->"<<(row-r)<<endl;
-            step += (row-r);
-        }
-    }else{
-        for(int j=0;j<n;j++){
-            int c = 0;
-            for(int i=0;i<n;i++){
-                c += arr[i][j];
-            }
-            // cout<<"col: "<<j<<" ->"<<(col-c)<<endl;
-            step += (col-c);
-        }   
-    }   
-    return step;
-    
-}
-
-
-
-void test(){
-}
-
 
 void solve(){
 
-    int n;
-    cin>>n;
-    
-    int arr[n][100];
-    cinMatrix(arr, n);
-    cout<<findMinOpeartion(arr, n)<<endl;
+    int m, n;
+    cin>>m>>n;
+    int arr1[m], arr2[n];
+    cinArray(arr1, m);
+    cinArray(arr2, n);
+    if(m<n)
+        cout<<medianTwoSortedArray(arr1, arr2, m, n);
+    else
+        cout<<medianTwoSortedArray(arr2, arr1, n, m);    
+    cout<<endl;
 }
+
+
 
 int main() {
     #ifndef ONLINE_JUDGE
