@@ -1,3 +1,4 @@
+// https://practice.geeksforgeeks.org/problems/maximum-water-between-two-buildings/1/?track=SPCF-Searching&batchId=154
 int maxWater(int arr[], int n) { 
     if(n<=2)
         return 0;

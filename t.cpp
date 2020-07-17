@@ -16,48 +16,57 @@ void cinArray(int arr[], int n){
     }    
 }
 
-int medianTwoSortedArray(int arr1[], int arr2[], int m, int n){//hamesa arr1 chota hoga
-    int low = 0, high = m;//high is not (m-1) bcoz hame pure small array ka sum chahiye us case mai jab pura array1 hoga left partition mai
-    while(low<=high){
-        int posX = (low+high)/2;
-        int posY = ((m+n+1)/2)-posX;
-        // cout<<"low:"<<low<<" high:"<<high<<" posX:"<<posX<<" posY:"<<posY<<endl;
-        int maxLeftX = (posX!=0)?arr1[(posX-1)]:INT_MIN;
-        int minRightX = (posX!=m)?arr1[posX]:INT_MAX;
-        
-        int maxLeftY = (posY!=0)?arr2[(posY-1)]:INT_MIN;
-        int minRightY = (posY!=n)?arr2[posY]:INT_MAX;
+void cinVector(vector<int>& v, int n){
+    int temp;
+    for(int i=0;i<n;i++){
+        cin>>temp;
+        v.push_back(temp);
+    }    
+}
 
-        if(maxLeftX<=minRightY && maxLeftY<=minRightX){
-            // cout<<"maxLeftX:"<<maxLeftX<<" maxLeftY:"<<maxLeftY<<"\nminRightX:"<<minRightX<<" minRightY:"<<minRightY<<endl;
-            if(((m+n)%2)==0)
-                return ((max(maxLeftY, maxLeftX)+min(minRightX, minRightY))/2);
-            else
-                return max(maxLeftY, maxLeftX);    
-        } 
-        else if(maxLeftY>minRightX)
-            low = posX+1;
-        else
-            high = posX-1;    
+void printVector(vector<int>& v, string s=""){
+    int n = (int)v.size();
+    if(s!="")
+        cout<<s<<": ";
+    for(int i=0;i<n;i++){
+        cout<<v[i]<<" ";
+    }    
+    cout<<endl;    
+}
+
+int distributeChoclate(int arr[], int n, int k){
+    k--;
+    sort(arr, arr+n);
+    int minn = INT_MAX;
+    for(int i=0;(i+k)<n;i++){
+        cout<<(arr[(i+k)]-arr[i])<<" ";
+        minn = min(minn, (arr[(i+k)]-arr[i]));
     }
-    return -1;// to avoid warning
+    cout<<endl;
+    return minn;
 }
 
 void solve(){
-
-    int m, n;
-    cin>>m>>n;
-    int arr1[m], arr2[n];
-    cinArray(arr1, m);
-    cinArray(arr2, n);
-    if(m<n)
-        cout<<medianTwoSortedArray(arr1, arr2, m, n);
-    else
-        cout<<medianTwoSortedArray(arr2, arr1, n, m);    
-    cout<<endl;
+    int n, m;
+    cin>>n;
+    int arr[n];
+    cinArray(arr, n);
+    cin>>m;
+    cout<<distributeChoclate(arr, n, m)<<endl;
 }
 
+void test(){
+    int n, x;
+    cin>>n;
+}
 
+void testCase(){
+    int t = 1;
+    cin>>t;
+    while(t--){
+        solve();
+    }
+}
 
 int main() {
     #ifndef ONLINE_JUDGE
@@ -65,9 +74,5 @@ int main() {
         freopen("output.txt","w",stdout);
     #endif
         // test();
-        int t = 1;
-        cin>>t;
-        while(t--){
-            solve();
-        }
+        testCase();
 }
