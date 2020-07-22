@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+#define ll long long
+
 void printArray(int arr[], int n, string s=""){
     if(s!="")
         cout<<s<<": ";
@@ -33,31 +35,50 @@ void printVector(vector<int>& v, string s=""){
     }    
     cout<<endl;    
 }
-
-int distributeChoclate(int arr[], int n, int k){
-    k--;
-    sort(arr, arr+n);
-    int minn = INT_MAX;
-    for(int i=0;(i+k)<n;i++){
-        cout<<(arr[(i+k)]-arr[i])<<" ";
-        minn = min(minn, (arr[(i+k)]-arr[i]));
-    }
-    cout<<endl;
-    return minn;
+int lowerBound(int arr[], int n, int x) { 
+    int mid; 
+    int low = 0; 
+    int high = n-1; 
+    while (low < high) { 
+        mid = low + (high - low) / 2; 
+        if (x <= arr[mid]) { 
+            high = mid; 
+        } 
+        else { 
+            low = mid + 1; 
+        } 
+    } 
+    return low; 
 }
 
+int upperBound(int arr[], int n, int x) { 
+    int mid; 
+    int low = 0; 
+    int high = n-1; 
+    while (low < high) { 
+        mid = (low + high) / 2; 
+        if (x >= arr[mid]) { 
+            low = mid + 1; 
+        } 
+        else { 
+            high = mid; 
+        } 
+    } 
+    return low; 
+} 
+
 void solve(){
-    int n, m;
+    int n, c;
     cin>>n;
     int arr[n];
     cinArray(arr, n);
-    cin>>m;
-    cout<<distributeChoclate(arr, n, m)<<endl;
+    cout<<lowerBound(arr,n, 2)<<endl;
+    cout<<upperBound(arr,n, 2)<<endl;
 }
 
+
 void test(){
-    int n, x;
-    cin>>n;
+
 }
 
 void testCase(){
@@ -76,3 +97,4 @@ int main() {
         // test();
         testCase();
 }
+// https://practice.geeksforgeeks.org/contest-problem/kth-smallest-difference2936521057062451/0/
