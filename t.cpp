@@ -35,50 +35,40 @@ void printVector(vector<int>& v, string s=""){
     }    
     cout<<endl;    
 }
-int lowerBound(int arr[], int n, int x) { 
-    int mid; 
-    int low = 0; 
-    int high = n-1; 
-    while (low < high) { 
-        mid = low + (high - low) / 2; 
-        if (x <= arr[mid]) { 
-            high = mid; 
-        } 
-        else { 
-            low = mid + 1; 
-        } 
-    } 
-    return low; 
+
+void showHash(unordered_map<char, int> hash){
+    for(auto x: hash)
+        cout<<x.first<<" "<<x.second<<endl;
 }
 
-int upperBound(int arr[], int n, int x) { 
-    int mid; 
-    int low = 0; 
-    int high = n-1; 
-    while (low < high) { 
-        mid = (low + high) / 2; 
-        if (x >= arr[mid]) { 
-            low = mid + 1; 
-        } 
-        else { 
-            high = mid; 
-        } 
-    } 
-    return low; 
-} 
+void getCount(string s){
+    int v = 0, b = 0;
+    for(int i=0;i<s.size();i++){
+        if(s[i]=='v')
+            v++;
+        else if(s[i]=='b')
+            b++;    
+    }
+    cout<<"v:"<<v<<"  b:"<<b<<"  ";
+}
+
+int printDistinct(char c){
+    return (c-'a'+1);
+}
+
+
 
 void solve(){
-    int n, c;
-    cin>>n;
-    int arr[n];
-    cinArray(arr, n);
-    cout<<lowerBound(arr,n, 2)<<endl;
-    cout<<upperBound(arr,n, 2)<<endl;
+    string s, p;
+    cin>>s>>p;
+    cout<<search(p, s)<<endl;
 }
 
 
 void test(){
-
+    string s;
+    cin>>s;
+    int arr[s.size()];
 }
 
 void testCase(){
@@ -97,4 +87,3 @@ int main() {
         // test();
         testCase();
 }
-// https://practice.geeksforgeeks.org/contest-problem/kth-smallest-difference2936521057062451/0/

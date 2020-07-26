@@ -3,7 +3,9 @@
         "variant": "cpp",
         "iostream": "cpp",
         "ostream": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "unordered_map": "cpp",
+        "cmath": "cpp"
     },
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
