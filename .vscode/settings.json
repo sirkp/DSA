@@ -11,7 +11,11 @@
         "list": "cpp",
         "string": "cpp",
         "unordered_set": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "array": "cpp",
+        "any": "cpp",
+        "string_view": "cpp",
+        "regex": "cpp"
     },
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true

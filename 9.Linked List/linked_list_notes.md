@@ -27,3 +27,9 @@
 ### Disadvantages:
  1. extra space for prev ptr.
  2. an extra ptr is need to be maintained in insertion and deletion operator
+
+ Applications :
+   - implementation of stack and queues.
+   - Performing arithmetic operations on long integers.
+   - Redo-undo features at many places like editors, photoshop.
+   - when multiple applications are running on a PC, it is common for the operating system to put the running applications on a list and then to cycle through them. It is implemented using circular linked list

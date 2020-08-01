@@ -107,3 +107,25 @@ public:
         return s;
     }
 };
+
+
+void test(){
+    List list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_front(3);
+    list.push_front(4);
+    list.push_back(5);
+    list.push_back(6);
+    list.displayList();
+    list.pop_back();
+    list.pop_back();
+    list.displayList();
+    list.pop_front();
+    list.pop_front();
+    list.displayList();
+    list.pop_front();
+    list.displayList();
+    list.pop_back();
+    list.displayList();
+}
