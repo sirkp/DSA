@@ -46,91 +46,34 @@ void printVector(vector<int> v, string s=""){
     cout<<endl;    
 }
 
-vector<int> nextSmallerElement(int arr[], int n){// without stack
-    vector<int> v(n, 1);
-    int next;
-    for(int i=(n-1);i>=0;i--){
-        next = i+1;
-        while(next<n && arr[i]<=arr[next]){
-            v[i] += v[next];
-            next += v[next];
-        }
-    }
-    // printVector(v);
-    for(int i=0;i<n;i++){
-        v[i] = i+v[i];
-    }
-    return v;
+pair<int, int> util(Node* node){
+    if(node!=NULL){
+        pair<int, int> l = util(node->left);
+        pair<int, int> r = util(node->right);
+        
+        return make_pair((l.second+r.second+node->data), (max(l.first, l.second)+max(r.first,r.second)));
+
+    }else
+        return make_pair(0, 0);
 }
 
-vector<int> prevSmallerElement(int arr[], int n){
-    vector<int> v(n, 1);
-    int prev;
-    for(int i=1;i<n;i++){
-        prev = i-1;
-        while(arr[i]<=arr[prev] && prev>=0){
-            v[i] += v[prev];
-            prev -= v[prev];
-        }
-    }
-    // printVector(v);
-    for(int i=0;i<n;i++){
-        v[i] = i-v[i];
-    }
-    return v;
+int getMaxSum(Node *root) {
+    pair<int, int> p = util(root);
+    return max(p.first, p.second);
 }
-
-vector<int> printMaxOfMin(int arr[], int n){
-    vector<int> left = prevSmallerElement(arr, n);
-    // printVector(prev);
-    vector<int> right = nextSmallerElement(arr, n);
-    // printVector(next);
-
-    vector<int> ans(n+1, 0);
-    for(int i=0;i<n;i++)
-        ans[right[i]-left[i]-1] = max(ans[right[i]-left[i]-1], arr[i]);
-
-    // printVector(ans);
-    for(int i=(n-1);i>=1;i--)
-        ans[i] = max(ans[i], ans[i+1]);
-
-    // printVector(ans);
-    ans.erase(ans.begin());
-    // printVector(ans);
-    
-    return ans;
-}
-
-
 
 void solve() {
-    int n;
-    cin>>n;
-    int arr[n];
-    cinArray(arr, n);
-    vector<int> v = printMaxOfMin(arr, n);
-    // cout<<v<<endl;
+    int n, k;
+    cin>>n>>k;
+    vector<int> v;
+    cinVector(v, n);
+    Node* root = deSerialize(v);
+    inOrder(root);
+    cout<<printKDistantfromLeaf(root, k)<<endl;
 }
 
 
 void test(){
-    KStack s(6, 3);
-    cout<<s.isEmpty(0)<<endl;
-    cout<<s.isEmpty(1)<<endl;
-    cout<<s.isEmpty(2)<<endl;
-    cout<<s.isFull()<<endl;
-    s.push(100, 0);
-    s.push(200, 0);
-    s.push(300, 0);
-    s.push(400, 1);
-    s.push(500, 1);
-    s.push(600, 2);
-
-    cout<<s.pop(0)<<" "<<s.pop(1)<<" "<<s.pop(2)<<endl;
-    cout<<s.pop(0)<<" "<<s.pop(1)<<" "<<s.pop(2)<<endl;
-    cout<<s.pop(0)<<" "<<s.pop(1)<<" "<<s.pop(2)<<endl;
-    cout<<s.pop(0)<<" "<<s.pop(1)<<" "<<s.pop(2)<<endl;
-    
 }
 
 void testCase(){
@@ -146,6 +89,6 @@ int main() {
         freopen("input.txt","r",stdin);
         freopen("output.txt","w",stdout);
     #endif
-        test();
-        // testCase();
+        // test();
+        testCase();
 }

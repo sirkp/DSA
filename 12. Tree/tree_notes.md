@@ -70,6 +70,6 @@
 
  Tree traversal:
    - preorder: CLR
-   - inorder: LCR
+   - inorder: LCR, to construct a tree inorder traversal along with any other traversal must be given
    - postorder: LRC
      

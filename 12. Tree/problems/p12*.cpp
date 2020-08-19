@@ -19,8 +19,10 @@ Node* lca(Node* root ,int n1 ,int n2 ){
             return root;
         else if(l!=NULL)
             return l;
-        else
+        else if(r!=NULL)
             return r;
+        else
+            return NULL:
     }
     else
         return NULL;
