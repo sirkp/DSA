@@ -19,7 +19,7 @@ int _stack ::pop(){
     if(s.size()!=0){
         int temp = max(minEle, s.top());
         if(s.top()<minEle){
-            minEle = 2*minEle - s.top();
+            minEle = minEle - s.top();
         }
         s.pop();
         return temp;
@@ -34,7 +34,7 @@ void _stack::push(int x){
        minEle = x;
    }else{
        if(x<minEle){
-           s.push(2*x-minEle);
+           s.push(x-minEle);
            minEle = x;
        }else{
            s.push(x);

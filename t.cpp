@@ -1,18 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class Node{
-public:
-    int data;
-    Node* left;
-    Node* right;
-    Node(int data){
-        this->data = data;
-        left = NULL;
-        right = NULL;
-    }
-};
-
 void printArray(int arr[], int n, string s=""){
     if(s!="")
         cout<<s<<": ";
@@ -43,37 +31,35 @@ void printVector(vector<int> v, string s=""){
     for(int i=0;i<n;i++){
         cout<<v[i]<<" ";
     }    
-    cout<<endl;    
+    cout<<endl<<endl;    
 }
 
-pair<int, int> util(Node* node){
-    if(node!=NULL){
-        pair<int, int> l = util(node->left);
-        pair<int, int> r = util(node->right);
-        
-        return make_pair((l.second+r.second+node->data), (max(l.first, l.second)+max(r.first,r.second)));
 
-    }else
-        return make_pair(0, 0);
-}
-
-int getMaxSum(Node *root) {
-    pair<int, int> p = util(root);
-    return max(p.first, p.second);
+void nearestLeft(int arr[], int n){
+    vector<int> v(n, 1);
+    for(int i=1;i<n;i++){
+        int j = i-1;
+        while(j>=0 && arr[j]>=arr[i]){
+            v[i] += v[j];
+            j -= v[j];
+        }
+    }
+    for(int i=0;i<n;i++)
+        cout<<i-v[i]<<" ";
+    cout<<endl;
 }
 
 void solve() {
-    int n, k;
-    cin>>n>>k;
-    vector<int> v;
-    cinVector(v, n);
-    Node* root = deSerialize(v);
-    inOrder(root);
-    cout<<printKDistantfromLeaf(root, k)<<endl;
+    int n;
+    cin>>n;
+    int arr[n];
+    cinArray(arr, n);
+    nearestLeft(arr, n);
 }
 
 
 void test(){
+
 }
 
 void testCase(){
