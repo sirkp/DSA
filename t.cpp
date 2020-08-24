@@ -1,6 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+class Node{
+public:
+    int data;
+    Node* left;
+    Node* right;
+    Node(int data){
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
 void printArray(int arr[], int n, string s=""){
     if(s!="")
         cout<<s<<": ";
@@ -31,35 +43,49 @@ void printVector(vector<int> v, string s=""){
     for(int i=0;i<n;i++){
         cout<<v[i]<<" ";
     }    
-    cout<<endl<<endl;    
+    cout<<endl;    
 }
 
+int util(Node* node, int &i, int k){
+    if(node){
+        int l = util(node->left, i, k);
 
-void nearestLeft(int arr[], int n){
-    vector<int> v(n, 1);
-    for(int i=1;i<n;i++){
-        int j = i-1;
-        while(j>=0 && arr[j]>=arr[i]){
-            v[i] += v[j];
-            j -= v[j];
+        if(l!=-1)
+            return l;
+
+        if(i==k){
+            return node->data;
         }
-    }
-    for(int i=0;i<n;i++)
-        cout<<i-v[i]<<" ";
-    cout<<endl;
+        i++;
+
+        int r = util(node->right, i, k);
+        return r;
+
+    }else
+        return -1;
 }
+
+int KthSmallestElement(Node* node, int k){
+    int i = 1;
+    return util(node, i, k);
+}
+
+
 
 void solve() {
-    int n;
-    cin>>n;
+    int n, k;
+    cin>>n>>k;
     int arr[n];
     cinArray(arr, n);
-    nearestLeft(arr, n);
+    int i = median(arr, n)<<endl;
 }
 
 
 void test(){
-
+    set<int> s;
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
 }
 
 void testCase(){

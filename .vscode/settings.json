@@ -19,7 +19,8 @@
         "bitset": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "set": "cpp"
     },
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true

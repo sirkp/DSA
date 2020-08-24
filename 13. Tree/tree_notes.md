@@ -49,7 +49,7 @@
   - A Binary Tree with L leaves has at least **LogL + 1** levels.
 
  Types of Binary Trees:
-   - **Full Binary Tree:** A Binary Tree is full if every node has either 0 or 2 children. In a full Binary tree, number of leaf nodes is always one more than nodes with two children. *Intuition:* no of nodes at level h-1 (2^h-1), no of node at level h is 2^h
+   - **Full Binary Tree(Strict binary tree):** A Binary Tree is full if every node has either 0 or 2 children. In a full Binary tree, number of leaf nodes is always one more than nodes with two children. *Intuition:* no of nodes at level h-1 (2^h-1), no of node at level h is 2^h
     ![](images/tree4.png)
 
    - **Complete Binary Tree:** A Binary Tree is complete Binary Tree if all levels are completely filled except possibly the last level and the last level has all keys as left as possible
