@@ -1,5 +1,30 @@
-#include<bits/stdc++.h>
-using namespace std;
+// https://practice.geeksforgeeks.org/problems/find-k-th-smallest-element-in-bst/1
+int util(Node* node, int &i, int k){
+    if(node){
+        int l = util(node->left, i, k);
+
+        if(l!=-1)
+            return l;
+
+        if(i==k){
+            return node->data;
+        }
+        i++;
+
+        int r = util(node->right, i, k);
+        return r;
+
+    }else
+        return -1;
+}
+
+int KthSmallestElement(Node* node, int k){
+    int i = 1;
+    return util(node, i, k);
+}
+
+
+// Augmented BST approach
 
 class Node{
 public:
@@ -14,58 +39,6 @@ public:
         leftCount = 0;
     }
 };
-
-void printArray(int arr[], int n, string s=""){
-    if(s!="")
-        cout<<s<<": ";
-    for(int i=0;i<n;i++){
-        cout<<arr[i]<<" ";
-    }    
-    cout<<endl;    
-}
-
-void cinArray(int arr[], int n){
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-    }    
-}
-
-void cinVector(vector<int>& v, int n){
-    int temp;
-    for(int i=0;i<n;i++){
-        cin>>temp;
-        v.push_back(temp);
-    }    
-}
-
-void printVector(vector<int> v, string s=""){
-    int n = (int)v.size();
-    if(s!="")
-        cout<<s<<": ";
-    for(int i=0;i<n;i++){
-        cout<<v[i]<<" ";
-    }    
-    cout<<endl;    
-}
-
-Node* insert(Node* node, int key){
-    if(node!=NULL){
-        if(node->data==key)
-            return node;
-        else if(key>node->data){
-            Node* right = insert(node->right, key);
-            node->right = right;
-        }
-        else{
-            Node* left = insert(node->left, key);
-            node->left = left;
-            node->leftCount++;
-        }
-        return node;
-    }else{
-        return new Node(key);
-    }  
-}
 
 Node* getMax(Node* node){
     if(node!=NULL){
@@ -113,15 +86,7 @@ Node* deleteNode(Node* node,  int x){
         return NULL;
 }
 
-void inorder(Node* node){
-    if(node){
-        inorder(node->left);
-        cout<<node->data<<": "<<node->leftCount<<endl;
-        inorder(node->right);
-    }
-}
-
-int kthElement(Node* node, int k, int prev=0){
+int kthElement(Node* node, int k, int prev=0){ // method1 passing prev values
     if(node){
         if(k==(prev+node->leftCount+1)){
             return node->data;
@@ -135,7 +100,7 @@ int kthElement(Node* node, int k, int prev=0){
 
 }
 
-int kthElement(Node* node, int k){
+int kthElement(Node* node, int k){ // method2 subtracting k
     if(node){
         if(k==(node->leftCount+1)){
             return node->data;
@@ -146,39 +111,4 @@ int kthElement(Node* node, int k){
         }
     }else
         return -1;
-}
-
-void solve() {
-    int n;
-    cin>>n;
-    int arr[n];
-    cinArray(arr, n);
-
-    Node* root = NULL;
-    for(int i=0;i<n;i++)
-        root = insert(root, arr[i]);
-    // inorder(root);
-    for(int i=1;i<=n;i++)
-        cout<<i<<" -> "<<kthElement(root, i)<<endl;
-}
-
-
-void test(){
-}
-
-void testCase(){
-    int t = 1;
-    cin>>t;
-    while(t--){
-        solve();
-    }
-}
-
-int main() {
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt","r",stdin);
-        freopen("output.txt","w",stdout);
-    #endif
-        // test();
-        testCase();
 }

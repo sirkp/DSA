@@ -20,7 +20,9 @@
         "initializer_list": "cpp",
         "utility": "cpp",
         "valarray": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "iosfwd": "cpp",
+        "chrono": "cpp"
     },
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
