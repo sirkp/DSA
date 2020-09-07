@@ -1,20 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class Node{
-public:
-    int data;
-    int leftCount;
-    Node* left;
-    Node* right;
-    Node(int data){
-        this->data = data;
-        left = NULL;
-        right = NULL;
-        leftCount = 0;
-    }
-};
-
 void printArray(int arr[], int n, string s=""){
     if(s!="")
         cout<<s<<": ";
@@ -48,120 +34,66 @@ void printVector(vector<int> v, string s=""){
     cout<<endl;    
 }
 
-Node* insert(Node* node, int key){
-    if(node!=NULL){
-        if(node->data==key)
-            return node;
-        else if(key>node->data){
-            Node* right = insert(node->right, key);
-            node->right = right;
-        }
-        else{
-            Node* left = insert(node->left, key);
-            node->left = left;
-            node->leftCount++;
-        }
-        return node;
-    }else{
-        return new Node(key);
-    }  
+void getSinkToSource(int u, vector<int> adj[], vector<bool>& visited, stack<int>& sinkToSource){
+    visited[u] = true;
+    for(auto v: adj[u])
+        if(!visited[v])
+            getSinkToSource(v, adj, visited, sinkToSource);
+    sinkToSource.push(u);
 }
 
-Node* getMax(Node* node){
-    if(node!=NULL){
-        if(node->right==NULL)
-            return node;
-        else
-            return getMax(node->right);
-    }else
-        return NULL;
-}
-
-Node* deleteNode(Node* node,  int x){
-    if(node!=NULL){
-        if(node->data==x){
-            if(node->left==NULL && node->right==NULL){
-                delete node;
-                node = NULL;
-            }
-            else if(node->left==NULL || node->right==NULL){
-                Node* temp;
-                if(node->left!=NULL)
-                    temp = node->left;
-                else
-                    temp = node->right;
-                delete node;
-                node = temp;
-            }else{
-                Node* temp = new Node(getMax(node->left)->data);
-                node = deleteNode(node, temp->data);
-                temp->left = node->left;
-                temp->right = node->right;
-                delete node;
-                node = temp;
-            }
-        }else if(x<node->data){
-            Node* l = deleteNode(node->left, x);
-            node->left = l;
-            node->leftCount--;
-        }else{
-            Node* r = deleteNode(node->right, x);
-            node->right = r;
-        }
-        return node;
-    }else
-        return NULL;
-}
-
-void inorder(Node* node){
-    if(node){
-        inorder(node->left);
-        cout<<node->data<<": "<<node->leftCount<<endl;
-        inorder(node->right);
+void getRevAdj(vector<int> adj[], int V, vector<int> revAdj[]){
+    for(int u=0;u<V;u++){
+        for(auto v: adj[u])
+            revAdj[v].push_back(u);
     }
 }
 
-int kthElement(Node* node, int k, int prev=0){
-    if(node){
-        if(k==(prev+node->leftCount+1)){
-            return node->data;
-        }else if(k<(prev+node->leftCount+1)){
-            return kthElement(node->left, k, prev);
-        }else{
-            return kthElement(node->right, k, (prev+node->leftCount+1));
-        }
-    }else
-        return -1;
-
+void dfs(int u, vector<int> adj[], vector<bool>& visited){
+    visited[u] = true;
+    for(auto v: adj[u])
+        if(!visited[v])
+            dfs(v, adj, visited);
 }
 
-int kthElement(Node* node, int k){
-    if(node){
-        if(k==(node->leftCount+1)){
-            return node->data;
-        }else if(k<(node->leftCount+1)){
-            return kthElement(node->left, k);
-        }else{
-            return kthElement(node->right, (k-(node->leftCount+1)));
+int kosarajuAlgo(vector<int> adj[], int V){
+    vector<bool> visited(V, false);
+    stack<int> sinkToSource;
+    
+    for(int i=0;i<V;i++){
+        if(!visited[i])
+            getSinkToSource(i, adj, visited, sinkToSource);
+    }
+
+    vector<int> revAdj[V];
+    getRevAdj(adj, V, revAdj);
+
+    for(int i=0;i<V;i++)
+        visited[i] = false;
+
+    int c = 0;
+    while(!sinkToSource.empty()){
+        int u = sinkToSource.top();
+        sinkToSource.pop();
+        if(!visited[u]){
+            dfs(u, revAdj, visited);
+            c++;
         }
-    }else
-        return -1;
+    }
+    return c;
 }
 
 void solve() {
-    int n;
-    cin>>n;
-    int arr[n];
-    cinArray(arr, n);
-
-    Node* root = NULL;
-    for(int i=0;i<n;i++)
-        root = insert(root, arr[i]);
-    // inorder(root);
-    for(int i=1;i<=n;i++)
-        cout<<i<<" -> "<<kthElement(root, i)<<endl;
+    int V, E;
+    cin>>V>>E;
+    vector<int> adj[V];
+    for(int i=0;i<E;i++){
+        int u, v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+    }
+    cout<<kosarajuAlgo(adj, V)<<endl;
 }
-
 
 void test(){
 }

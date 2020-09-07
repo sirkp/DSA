@@ -23,4 +23,4 @@
 String class | Character array       
 ------------ | --------------- 
 dynamic memory allocation | static memory allocation
-array of chars terminated by null | it is object which represent stream of chars
+it is object which represent stream of chars | array of chars terminated by null
