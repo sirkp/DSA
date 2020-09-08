@@ -22,7 +22,8 @@
         "valarray": "cpp",
         "set": "cpp",
         "iosfwd": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "forward_list": "cpp"
     },
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true

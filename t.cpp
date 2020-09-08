@@ -13,6 +13,7 @@ void printArray(int arr[], int n, string s=""){
 void cinArray(int arr[], int n){
     for(int i=0;i<n;i++){
         cin>>arr[i];
+        arr[i]--;
     }    
 }
 
@@ -34,65 +35,78 @@ void printVector(vector<int> v, string s=""){
     cout<<endl;    
 }
 
-void getSinkToSource(int u, vector<int> adj[], vector<bool>& visited, stack<int>& sinkToSource){
-    visited[u] = true;
-    for(auto v: adj[u])
-        if(!visited[v])
-            getSinkToSource(v, adj, visited, sinkToSource);
-    sinkToSource.push(u);
-}
-
-void getRevAdj(vector<int> adj[], int V, vector<int> revAdj[]){
-    for(int u=0;u<V;u++){
-        for(auto v: adj[u])
-            revAdj[v].push_back(u);
+void printGraph(vector<int> adj[], int n){
+    for(int i=0;i<n;i++){
+        cout<<i;
+        printVector(adj[i]);
     }
-}
-
-void dfs(int u, vector<int> adj[], vector<bool>& visited){
-    visited[u] = true;
-    for(auto v: adj[u])
-        if(!visited[v])
-            dfs(v, adj, visited);
-}
-
-int kosarajuAlgo(vector<int> adj[], int V){
-    vector<bool> visited(V, false);
-    stack<int> sinkToSource;
     
-    for(int i=0;i<V;i++){
-        if(!visited[i])
-            getSinkToSource(i, adj, visited, sinkToSource);
-    }
+}
 
-    vector<int> revAdj[V];
-    getRevAdj(adj, V, revAdj);
+int getMin(vector<int> dist, vector<bool> done){
+    int m = INT_MAX;
+    int index = -1;
 
-    for(int i=0;i<V;i++)
-        visited[i] = false;
-
-    int c = 0;
-    while(!sinkToSource.empty()){
-        int u = sinkToSource.top();
-        sinkToSource.pop();
-        if(!visited[u]){
-            dfs(u, revAdj, visited);
-            c++;
+    for(int i=0;i<(int)dist.size();i++){
+        if(!done[i] && dist[i]<m){
+            m = dist[i];
+            index = i;
         }
     }
-    return c;
+    return index;
 }
+
+
+int dijkstra(vector<pair<int,int>> adj[], int V, int src, int dest[], int n){
+    vector<bool> finalised(V, false);
+    vector<int> dist(V, INT_MAX);
+    dist[src] = 0;
+    int f = 0;
+    while(f<V){
+        int u = getMin(dist, finalised);
+        // cout<<u<<":"<<endl; 
+        finalised[u] = true;
+        f++;
+
+        for(auto p: adj[u]){
+            int v = p.first;
+            int w = p.second;
+            if(!finalised[v] && dist[u]!=INT_MAX && dist[v]>(dist[u]+w)){
+                dist[v] = dist[u]+w;
+            }
+        }
+    }
+    vector<int> v;
+    // printVector(dist);
+    for(int i=0;i<n;i++){
+        v.push_back(dist[dest[i]]);
+    }
+    sort(v.begin(), v.end());
+    int ans = 0;
+    for(int i=0;i<(n-1);i++)
+        ans += 2*v[i];
+    
+    return (ans+v[n-1]);
+
+
+}
+
 
 void solve() {
     int V, E;
     cin>>V>>E;
-    vector<int> adj[V];
+    vector<pair<int,int>> adj[V];
     for(int i=0;i<E;i++){
-        int u, v;
-        cin>>u>>v;
-        adj[u].push_back(v);
+        int u, v, w;
+        cin>>u>>v>>w;
+        adj[u-1].push_back(make_pair(v-1, w));
+        adj[v-1].push_back(make_pair(u-1, w));
     }
-    cout<<kosarajuAlgo(adj, V)<<endl;
+    int s, n;
+    cin>>s>>n;
+    int dest[n];
+    cinArray(dest, n);
+    cout<<dijkstra(adj, V, s-1, dest, n)<<endl;
 }
 
 void test(){
