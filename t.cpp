@@ -35,81 +35,65 @@ void printVector(vector<int> v, string s=""){
     cout<<endl;    
 }
 
-void printGraph(vector<int> adj[], int n){
-    for(int i=0;i<n;i++){
-        cout<<i;
-        printVector(adj[i]);
-    }
-    
-}
 
-int getMin(vector<int> dist, vector<bool> done){
-    int m = INT_MAX;
-    int index = -1;
-
-    for(int i=0;i<(int)dist.size();i++){
-        if(!done[i] && dist[i]<m){
-            m = dist[i];
-            index = i;
+void util(int l, int sum, int tar, vector<int> arr, vector<int> v, vector<vector<int>>& ans){
+    if(sum==tar){
+        ans.push_back(v);
+    }else if(sum<tar){
+        v.push_back(-1);
+        for(int i=l;i<(int)arr.size();i++){
+            v[(int)v.size()-1] = arr[i];
+            sum += arr[i];
+            util(i, sum, tar, arr, v, ans);
+            sum -= arr[i];
         }
     }
-    return index;
 }
 
+vector<int> removeDuplicates(vector<int> v){
+    unordered_set<int> hash;
+    for(int i=0;i<(int)v.size();i++)
+        hash.insert(v[i]);
 
-int dijkstra(vector<pair<int,int>> adj[], int V, int src, int dest[], int n){
-    vector<bool> finalised(V, false);
-    vector<int> dist(V, INT_MAX);
-    dist[src] = 0;
-    int f = 0;
-    while(f<V){
-        int u = getMin(dist, finalised);
-        // cout<<u<<":"<<endl; 
-        finalised[u] = true;
-        f++;
+    vector<int> uniq;
+    for(auto x: hash)
+        uniq.push_back(x);
+    return uniq;
+}
 
-        for(auto p: adj[u]){
-            int v = p.first;
-            int w = p.second;
-            if(!finalised[v] && dist[u]!=INT_MAX && dist[v]>(dist[u]+w)){
-                dist[v] = dist[u]+w;
-            }
-        }
-    }
+vector<vector<int> > combinationSum(vector<int> &arr, int tar) {
+    vector<int> uniq = removeDuplicates(arr);
+    sort(uniq.begin(), uniq.end());
     vector<int> v;
-    // printVector(dist);
-    for(int i=0;i<n;i++){
-        v.push_back(dist[dest[i]]);
-    }
-    sort(v.begin(), v.end());
-    int ans = 0;
-    for(int i=0;i<(n-1);i++)
-        ans += 2*v[i];
-    
-    return (ans+v[n-1]);
-
-
+    vector<vector<int>> ans;
+    util(0, 0, tar, uniq, v, ans);
+    return ans;
 }
-
 
 void solve() {
-    int V, E;
-    cin>>V>>E;
-    vector<pair<int,int>> adj[V];
-    for(int i=0;i<E;i++){
-        int u, v, w;
-        cin>>u>>v>>w;
-        adj[u-1].push_back(make_pair(v-1, w));
-        adj[v-1].push_back(make_pair(u-1, w));
+    int n, tar;
+    cin>>n;
+    vector<int> arr;
+    cinVector(arr, n);
+    cin>>tar;
+    vector<vector<int>> ans = combinationSum(arr, tar);
+    for(int i=0;i<(int)ans.size();i++){
+        for(int j=0;j<(int)ans[i].size();j++)
+            cout<<ans[i][j]<<" ";
+        cout<<endl;
     }
-    int s, n;
-    cin>>s>>n;
-    int dest[n];
-    cinArray(dest, n);
-    cout<<dijkstra(adj, V, s-1, dest, n)<<endl;
+
 }
 
 void test(){
+    vector<int> v;
+    v.push_back(1);
+    v.push_back(-3);
+    v.push_back(3);
+    vector<int> ans;
+    ans.push_back(1);
+    ans.push_back(-3);
+    ans.push_back(3);
 }
 
 void testCase(){
