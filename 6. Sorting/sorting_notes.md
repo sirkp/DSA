@@ -1,6 +1,11 @@
 # Sorting
 
-- A sorting algorithm is said to be stable if two objects with equal keys appear in the same order in sorted output as they appear in the input array to be sorted.
+- A sorting algorithm is said to be stable if two objects with equal keys appear in the same order in sorted output as they appear in the input array to be sorted. following algorithms are stable:
+  - **insertion sort**
+  - **bubble sort**
+  - **merge sort**: depends on implementation(left[i]<=right[j] - stable)
+  - **heap sort**: depends on implementation
+
 - inplace sorting means without any space required.
     - insertion sort
     - bubble sort
@@ -24,7 +29,8 @@
 
 ## Selection sort
 - finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning
-- Time: O(n^2),   Extra Space: no,     not stable 
+- Time: O(n^2),   Extra Space: no,     not stable(4A 5 3 2 4B 1)
+- **minimum no of swaps**
 
 ![](images/selection_sort.png)   
 

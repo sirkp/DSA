@@ -1,4 +1,4 @@
-// queue implementation using array
+// queue implementation using circular array
 class Queue{
 private:
     int *arr;

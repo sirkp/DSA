@@ -3,6 +3,5 @@ long long findNthFibonacci(int number, long long int dp[]){
     if(dp[number]>0)
         return dp[number];
     dp[number] = findNthFibonacci(number-1, dp) + findNthFibonacci(number-2, dp);
-    return dp[number];
-    
+    return dp[number];   
 }

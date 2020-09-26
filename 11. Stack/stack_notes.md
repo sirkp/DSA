@@ -10,3 +10,8 @@
    - Stacks can be used to check for the balancing of paranthesis in an expression.
    - Infix to Postfix/Prefix conversion.
    - Redo-undo features at many places like editors, photoshop.
+
+ ### Infix to Prefix
+  - reverse expresion
+  - find postfix
+  - reverse postfix

@@ -66,3 +66,27 @@ int minimumSwaps(vector<int> arr){// graph method
     
     return ans;
 }
+
+// works for duplicate also
+int minSwaps(int arr[], int n){
+    vector<pair<int, int>> v;
+    for(int i=0;i<n;i++)
+        v.push_back(make_pair(arr[i], i));
+
+    sort(v.begin(), v.end());
+    vector<int> val;
+    vector<int> ind;
+    for(auto p: v)
+        val.push_back(p.first), ind.push_back(p.second);
+
+    int count = 0;
+    for(int i=0;i<n;i++){
+        if(arr[i]!=val[i]){
+            int index = lower_bound(val.begin()+1, val.end(), arr[i]) - val.begin();
+            swap(arr[i], arr[ind[i]]);
+            swap(ind[index], ind[i]);
+            count++;
+        }
+    }       
+    return count;
+}

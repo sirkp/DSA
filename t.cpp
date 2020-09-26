@@ -1,5 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define lli long long int
+#define ll long long
+#define MOD 1000000007
 
 void printArray(int arr[], int n, string s=""){
     if(s!="")
@@ -13,7 +16,6 @@ void printArray(int arr[], int n, string s=""){
 void cinArray(int arr[], int n){
     for(int i=0;i<n;i++){
         cin>>arr[i];
-        arr[i]--;
     }    
 }
 
@@ -22,6 +24,14 @@ void cinVector(vector<int>& v, int n){
     for(int i=0;i<n;i++){
         cin>>temp;
         v.push_back(temp);
+    }    
+}
+
+void cinVectorPair(vector<pair<int, int>>& v, int n){
+    int x, y;
+    for(int i=0;i<n;i++){
+        cin>>x>>y;
+        v.push_back(make_pair(x, y));
     }    
 }
 
@@ -35,78 +45,83 @@ void printVector(vector<int> v, string s=""){
     cout<<endl;    
 }
 
-void print(vector<string> grid){
-    for(int i=0;i<(int)grid.size();i++){
-        cout<<grid[i]<<endl;
-    }   
-}
-
-bool isSafe(int x, int y, int n, vector<string>& grid){
-    for(int i=0;i<x;i++){// col
-        if(grid[i][y]=='Q')
-            return false;
-    }
-
-    int i=x-1, j=y-1;// pos diagonal
-    while(i>=0 && j>=0 && i<n && j<n){
-        if(grid[i][j]=='Q')
-            return false;
-        i--;
-        j--;
-    }
-
-    i=x-1, j=y+1;
-    while(i>=0 && j>=0 && i<n && j<n){
-        if(grid[i][j]=='Q')
-            return false;
-        i--;
-        j++;
-    }
-    return true;
-
-}
-
-void util(int x, int n, vector<string>& grid, vector<vector<string>>& ans, bool& done){
-    if(x==n){
-        ans.push_back(grid);
-        return;
-    }else{
-        for(int y=0;y<n;y++){
-            if(isSafe(x, y, n, grid)){
-                grid[x][y] = 'Q';
-                util(x+1, n, grid, ans, done);
-                if(done)
-                    return;
-                grid[x][y] = '.';
-            }
-        }
-    }
-}
-
-vector<vector<string>> solveNQueens(int n) {
-    vector<vector<string>> ans;
-    vector<string> grid; 
+void printVectorLL(vector<ll> v, string s=""){
+    int n = (int)v.size();
+    if(s!="")
+        cout<<s<<": ";
     for(int i=0;i<n;i++){
-        string temp(n, '.');
-        grid.push_back(temp);
-    }
-    // print(grid);
-    bool done = false;
-    util(0, n, grid, ans, done);
-    return ans;
+        cout<<v[i]<<" ";
+    }    
+    cout<<endl;    
 }
+
+void printVectorPair(vector<pair<int, int>> v, string s=""){
+    int n = (int)v.size();
+    if(s!="")
+        cout<<s<<": ";
+    for(int i=0;i<n;i++){
+        cout<<v[i].first<<","<<v[i].second<<"  ";
+    }    
+    cout<<endl;    
+}
+
+class Node{
+public:
+    int data;
+    Node* left;
+    Node* right;
+    Node(int data){
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+// Coding Area Begin
+
+class TrieNode{
+public:
+    TrieNode* children[26];
+    bool isEndOfWord;
+    TrieNode(){
+        for(int i=0;i<26;i++)
+            children[i] = NULL;
+        isEndOfWord = false;
+    }
+}
+
+
+
+// Coding Area End
 
 void solve() {
     int n;
     cin>>n;
-    vector<vector<string>> grid = solveNQueens(n);
-    for(int i=0;i<(int)grid.size();i++){
-        print(grid[i]);
-        cout<<endl;
-    }
+    int arr[n];
+    cinArray(arr, n);
+    segmentTree(arr, n);
+}
+
+vector<int> fn(){
+    int arr[] = {1,2,3};
+    vector<int> v{1,2,3};
+    return v;
 }
 
 void test(){
+    cout<<"**testing**\n"; 
+    
+    char str[] = "Geeks for   Geeks"; 
+  
+    char *token = strtok(str, " "); 
+    string s;
+    
+    while (token != NULL) 
+    {
+        s = token; 
+        cout<<s<<endl; 
+        token = strtok(NULL, "-"); 
+    } 
 
 }
 

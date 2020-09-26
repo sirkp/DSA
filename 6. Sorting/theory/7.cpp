@@ -1,6 +1,6 @@
 // Heap sort
 // time:O(nlogn) extra_space: no
-// not stable in this stable, but can be made
+// not stable in this implementation, but can be made
 void swap(int& a, int& b){
     if((&a)!=(&b)){
         a = a+b;

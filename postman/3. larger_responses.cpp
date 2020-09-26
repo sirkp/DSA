@@ -1,6 +1,4 @@
-#include<bits/stdc++.h>
-using namespace std;
-
+// larger responses
 long long int getByte(string s){
     int i = (int)s.size()-1;
     string str;
@@ -42,8 +40,4 @@ void largerResponses(string filename){
     fout<<sum<<endl;
     fout.close(); 
 
-}
-
-int main(){
-    largerResponses("hosts_access_log_00.txt");
 }

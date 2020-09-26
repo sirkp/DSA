@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-long long int getByte(string s){
+int getByte(string s){
     int i = (int)s.size()-1;
     string str;
     while(s[i]!= ' '){
@@ -9,29 +9,29 @@ long long int getByte(string s){
         i--;
     }
     reverse(str.begin(), str.end());
-    long long int no = stoll(str, nullptr, 10);
+    int no = stoi(str);
     return no;
 }
 
-void largerResponses(string filename){
+void test(string filename){
     fstream fin;
     fin.open(filename, ios::in);
     
-    int n=0;
-    long long int sum = 0; 
+    int n=0, sum=0; 
 
     string line;
-    while(true){
+    int i=1;
+    while(fin){
+        cin.ignore()
         getline(fin, line);
-        long long int byte = getByte(line);
-        
+        int byte = getByte(line);
+        cout<<i<<": "<<line<<endl;
+        // cout<<"byte: "<<byte<<endl;
         if(byte>5000){
             n++;
             sum += byte;
         }
-        
-        if(fin.eof())
-            break;
+        i++;
     }
     fin.close();
 
@@ -45,5 +45,6 @@ void largerResponses(string filename){
 }
 
 int main(){
-    largerResponses("hosts_access_log_00.txt");
+    test("input.txt");
+    // test("hosts_access_log_00.txt");
 }
