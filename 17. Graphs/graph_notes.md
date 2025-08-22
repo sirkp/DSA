@@ -65,6 +65,7 @@ A Graph is a data structure that consists of the following two components:
       - **Tree:** A tree is just a restricted form of graph.That is, it is a DAG with a restriction that a child can have only one parent.
    2. ***Undirected graph:*** A graph in which the direction of the edge is not defined. So if an edge exists between node ‘u’ and ‘v’,then there is a path from node ‘u’ to ‘v’ and vice versa.
       - **Connected graph:** A graph is connected when there is a path between every pair of vertices.
+      - **Tree:** Connected graph and has no cycles.
       - **Complete graph:** A graph in which each pair of graph vertices is connected by an edge. In other words,every node ‘u’ is adjacent to every other node ‘v’ in graph ‘G’. A complete graph would have n(n-1)/2 edges.
       - **Biconnected graph:** A connected graph which cannot be broken down into any further pieces by deletion of any vertex. It is a graph with no articulation point.
 
