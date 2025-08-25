@@ -136,12 +136,14 @@ A Graph is a data structure that consists of the following two components:
  ## Shortest Path in Unweighted graph
  - Use BFS
 
- ## Shortest path in DAG
-  - intialize all distance to INF except source
-  - do topological sort
-  - traverse in topological order and change distance of adjacent vertices
+ ## Shortest path in Weighted Graph
+ ### DAG
+    - intialize all distance to INF except source
+    - do topological sort
+    - traverse in topological order and change distance of adjacent vertices
 
- ## Dijkstra's Shortest Path Algorithm
+ ### Dijkstra's Shortest Path Algorithm
+  - work both in directed and undirected graph with limitation that dijkstra algo can't be applied to graph having negative weight. 
   - intialize all distance to INF except source
   - while all vertex are not finalised
     - find minimum among distances which are not finalised and change distances of adjacent unvisited vertices, mark current vertex as visited.
@@ -149,8 +151,10 @@ A Graph is a data structure that consists of the following two components:
 
   - Dijkstra's algo cannot be used in graph having negative weight.
 
- ## Bellman Ford Shortest Path Algo
+ ### Bellman Ford Shortest Path Algo
   - works for negative weights but fail in negative weight cycle
+  - An undirected edge is treated as two directed edges. If you introduce a negative weight in an undirected graph, then both directions become negative, which automatically forms a negative cycle → Bellman-Ford will detect it and say "negative cycle exists."
+  - That’s why negative weights are rarely used in undirected graphs.
 
     ![](images/graph13.png)
   
@@ -158,7 +162,7 @@ A Graph is a data structure that consists of the following two components:
     - initialize distances from the source to all vertices as infinite and distance to the source itself as 0.
     - Do following V-1 times
       - for each edge(u,v), If dist[v]>dist[u]+weight(u,v) then dist[v]=dist[u]+weight(u,v)
-    - check negative weight cycle, for each edge if dist[v]>dist[u]+weight(u,v) then negative weight cycle 
+    - check negative weight cycle, relax the edges one more time: for each edge if dist[v]>dist[u]+weight(u,v) then negative weight cycle 
 
  ## Strongly connected componenets
   A set of vertices which have path between all pair of vertices is called strongly connected components.
