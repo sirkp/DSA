@@ -138,9 +138,9 @@ A Graph is a data structure that consists of the following two components:
 
  ## Shortest path in Weighted Graph
  ### DAG
-    - intialize all distance to INF except source
-    - do topological sort
-    - traverse in topological order and change distance of adjacent vertices
+  - intialize all distance to INF except source
+  - do topological sort
+  - traverse in topological order and change distance of adjacent vertices
 
  ### Dijkstra's Shortest Path Algorithm
   - work both in directed and undirected graph with limitation that dijkstra algo can't be applied to graph having negative weight. 
@@ -150,6 +150,7 @@ A Graph is a data structure that consists of the following two components:
       - Update key value of all adjacent vertices of u, if v not included keys[v] = min(keys[v], adj[u][v])
 
   - Dijkstra's algo cannot be used in graph having negative weight.
+  - Time: O((E + V)Log(V)) Space: O(V)
 
  ### Bellman Ford Shortest Path Algo
   - works for negative weights but fail in negative weight cycle
@@ -162,7 +163,9 @@ A Graph is a data structure that consists of the following two components:
     - initialize distances from the source to all vertices as infinite and distance to the source itself as 0.
     - Do following V-1 times
       - for each edge(u,v), If dist[v]>dist[u]+weight(u,v) then dist[v]=dist[u]+weight(u,v)
-    - check negative weight cycle, relax the edges one more time: for each edge if dist[v]>dist[u]+weight(u,v) then negative weight cycle 
+    - check negative weight cycle, relax the edges one more time: for each edge if dist[v]>dist[u]+weight(u,v) then negative weight cycle
+
+  - O(E * V) Space: O(V)
 
  ## Strongly connected componenets
   A set of vertices which have path between all pair of vertices is called strongly connected components.
